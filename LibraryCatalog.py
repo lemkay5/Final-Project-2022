@@ -3,24 +3,31 @@
 # Date: 03/18/2022
 # Summary: Find and alter items in a list of books
 # Variables:
-#   
+#
+
+catalogList = []
 
 def main():
-    title, author, pubDate, nextLine = getInfo()
-    print(title, author, pubDate, nextLine)
-    while nextLine.rstrip('\n') == "<>":
-        title, author, pubDate, nextLine = getInfo()
-        print(title, author, pubDate, nextLine)
+    housekeeping()
+    print(catalogList)
+    
+    
 
-        
-    print("End of program")
-
-def getInfo():
+def housekeeping():
     openCatalog = open('catalog.txt', 'r')
-    title = openCatalog.readline()
-    author = openCatalog.readline()
-    pubDate = openCatalog.readline()
-    nextLine = openCatalog.readline()
-    return title, author, pubDate, nextLine
+    newLine = ""
+    count = 0
+    while True:
+        title = (openCatalog.readline()).rstrip('\n')
+        author = (openCatalog.readline()).rstrip('\n')
+        pubDate = (openCatalog.readline()).rstrip('\n')
+        item = (title, author, pubDate)
+        catalogList.append(item)
+        count += 1
+        newLine = openCatalog.readline()
+        if newLine.rstrip('\n') != "<>":
+            openCatalog.close()
+            break
+    return catalogList
     
 main()
