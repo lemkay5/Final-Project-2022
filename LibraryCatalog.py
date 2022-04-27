@@ -5,14 +5,19 @@
 # Variables:
 #
 
-from Search_Functions import titleSearch, authorSearch, pubDateSearch
+from Search_Functions import searchCatalog, titleSearch, authorSearch, pubDateSearch
+from Edit_Functions import editCatalog, addBook, deleteBook
 catalogList = []
 
 def main():
     housekeeping()
     choice = chooseFunction()
     if choice == 1:
-        searchCatalog()
+        info, foundIt = searchCatalog(catalogList)
+        if foundIt == True:
+            formatInfo(info)
+        if foundIt == False:
+            print(info)
     if choice == 2:
         editCatalog()
 
@@ -37,17 +42,10 @@ def chooseFunction():
     choice = int(input("Enter 1 to search the catalog or 2 to edit it: "))
     return choice
 
-def searchCatalog():
-    info = ""
-    print("Enter 1 to search by title, ")
-    print("Enter 2 to search by author, ")
-    searchType = int(input("or 3 to search by publication date: "))
-    if searchType == 1:
-        info = titleSearch(catalogList)
-    if searchType == 2:
-        info = authorSearch(catalogList)
-    if searchType == 3:
-        info = pubDateSearch(catalogList)
-    print(info)
-
+def formatInfo(book):
+    for item in book:
+        print("\nTitle: " + item[0])
+        print("Author: " + item[1])
+        print("Year Published: " + item[2])
+    
 main()
