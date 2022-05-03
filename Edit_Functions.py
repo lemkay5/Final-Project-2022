@@ -14,7 +14,7 @@ def addBook(catalog):
     # Loop to add as many books as user desires
     while True:
         # Get input from user
-        title = input("\Enter the title of the book: ")
+        title = input("\nEnter the title of the book: ")
         author = input("Enter the author of the book: ")
         pubDate = input("Enter the book's year of publication: ")
         info = [(title, author, pubDate)]
@@ -22,23 +22,14 @@ def addBook(catalog):
         formatInfo(info)
         print("Is the above information correct?")
         check = input("Type 'Y' for yes or 'N' for no.")
-        # Information correct; append to catalog file
         if check.upper() == 'Y':
-            # Open file
-            openCatalog = open('catalog.txt', 'a')
-            # Write <> to file to ensure future searches run correctly
-            openCatalog.write("\n<>\n")
+            # Information correct; check if any items in file
+            openCatalog = open('catalog.txt', 'r')
+            # Check if anything written in file
+            firstLine = (openCatalog.readline()).rstrip()
             # Write information to file
-            openCatalog.write(title + "\n")
-            openCatalog.write(author + "\n")
-            openCatalog.write(pubDate)
-            # Close file
-            openCatalog.close()
-            # Append info to catalog list
-            catalog.append(info)
-            # Ask user if they wish to continue
-            print("Book added to catalog.")
-            print("\nDo you wish to enter other information?")
+            writeToFile(title, author, pubDate, catalog, firstLine)
+            print("Do you wish to enter another book?")
             choice = input("Type 'Y' for yes or 'N' for no.")
             if choice.upper() == 'N':
                 # User done; exits loop and therefore function
@@ -69,3 +60,22 @@ def formatInfo(book):
         print("\nTitle: " + item[0])
         print("Author: " + item[1])
         print("Year Published: " + item[2])
+
+def writeToFile(title, author, pubDate, catalog, firstLine):
+        # Open file
+        openCatalog = open('catalog.txt', 'a')
+        # Write <> if not first in file
+        if firstLine != '':
+            openCatalog.write("\n<>\n")
+        else:
+            catalog.pop(0)
+        openCatalog.write(title + "\n")
+        openCatalog.write(author + "\n")
+        openCatalog.write(pubDate)
+        # Close file
+        openCatalog.close()
+        # Append info to catalog list
+        catalog.append((title, author, pubDate))
+        print(catalog)
+        # Ask user if they wish to continue
+        print("Book added to catalog.")
