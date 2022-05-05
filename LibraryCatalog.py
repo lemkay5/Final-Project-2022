@@ -13,15 +13,24 @@ catalogList = [] # initialize list of books
 def main():
     housekeeping()
     choice = chooseFunction()
-    # Run search or edit functions depending on user choice
-    if choice == 1:
-        info, foundIt = searchCatalog(catalogList) # search results & flag
-        if foundIt == True:
-            formatInfo(info)
-        if foundIt == False:
-            print(info)
-    if choice == 2:
-        editCatalog(catalogList)
+    while choice.upper() != "QUIT":
+        # Run search or edit functions depending on user choice
+        if choice == '1':
+            info, foundIt = searchCatalog(catalogList) # search results & flag
+            if foundIt == True:
+                # Match found, prints matches
+                print("\nResults:")
+                formatInfo(info)
+            if foundIt == False:
+                # No matches, prints message returned by function
+                print(info)
+        elif choice == '2':
+            editCatalog(catalogList)
+        else:
+            print("ERROR... input must be \"1\" or \"2\"")
+        # Ask user to choose function again
+        choice = chooseFunction()
+    print("\nEnd of program.")
 
 def housekeeping():
     # Create list of tuples containing the data of the books
@@ -52,13 +61,13 @@ def housekeeping():
 
 def chooseFunction():
     # User chooses whether to search or edit the catalog
-    choice = int(input("Enter 1 to search the catalog or 2 to edit it: "))
+    choice = input("\nEnter 1 to search catalog, 2 to edit it, or 'quit' to quit: ")
     return choice
 
 def formatInfo(book):
     # Formats and prints book information
     for item in book:
-        print("\nTitle: " + item[0])
+        print("Title: " + item[0])
         print("Author: " + item[1])
         print("Year Published: " + item[2])
     
