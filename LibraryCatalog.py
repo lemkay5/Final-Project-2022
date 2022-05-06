@@ -16,14 +16,16 @@ def main():
     while choice.upper() != "QUIT":
         # Run search or edit functions depending on user choice
         if choice == '1':
-            info, foundIt = searchCatalog(catalogList) # search results & flag
-            if foundIt == True:
-                # Match found, prints matches
-                print("\nResults:")
-                formatInfo(info)
-            if foundIt == False:
-                # No matches, prints message returned by function
-                print(info)
+            nextSearch = True
+            while nextSearch == True:
+                info, foundIt, nextSearch = searchCatalog(catalogList) # search results & flag
+                if foundIt == True:
+                    # Match found, prints matches
+                    print("\nResults:")
+                    formatInfo(info)
+                if foundIt == False:
+                    # No matches, prints message returned by function
+                    print(info)
         elif choice == '2':
             editCatalog(catalogList)
         else:
@@ -61,7 +63,7 @@ def housekeeping():
 
 def chooseFunction():
     # User chooses whether to search or edit the catalog
-    choice = input("\nEnter 1 to search catalog, 2 to edit it, or 'quit' to quit: ")
+    choice = input("Enter 1 to search catalog, 2 to edit it, or 'quit' to quit: ")
     return choice
 
 def formatInfo(book):
@@ -69,6 +71,6 @@ def formatInfo(book):
     for item in book:
         print("Title: " + item[0])
         print("Author: " + item[1])
-        print("Year Published: " + item[2])
+        print("Year Published: " + item[2] + '\n')
     
 main()

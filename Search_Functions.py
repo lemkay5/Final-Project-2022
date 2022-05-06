@@ -2,20 +2,27 @@ def searchCatalog(catalog):
     # Searches catalog and retuns items found or message if not found
     
     info = "" # initializes variable to contain book information
+    foundIt = False
 
     # Ask user for type of search
     print("\nEnter 1 to search by title, ")
     print("Enter 2 to search by author, ")
-    searchType = int(input("Enter 3 to search by publication date: "))
-    
+    print("Enter 3 to search by publication date: ")
+    searchType = input("Enter 4 to exit the search menu: ")
     # Search based on user choice
-    if searchType == 1:
+    if searchType == '1':
         info, foundIt = titleSearch(catalog) # search results & flag
-    if searchType == 2:
+    elif searchType == '2':
         info, foundIt = authorSearch(catalog) # search results & flag
-    if searchType == 3:
+    elif searchType == '3':
         info, foundIt = pubDateSearch(catalog)# search results & flag
-    return info, foundIt
+    elif searchType == '4':
+        nextSearch = False
+        return info, foundIt, nextSearch
+    else:
+        print("\nERROR... enter a whole number between 1 and 4")
+    nextSearch = True
+    return info, foundIt, nextSearch
 
 def titleSearch(catalog):
     # Creates and returns list of tuples containing book

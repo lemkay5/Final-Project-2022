@@ -2,7 +2,7 @@ from Search_Functions import searchCatalog
 
 def editCatalog(catalog):
     # Adds or removes items from catalog based on user choice
-    editType = int(input("Enter 1 to add to the catalog or 2 to delete from the catalog: "))
+    editType = int(input("\nEnter 1 to add to the catalog or 2 to delete from the catalog: "))
     if editType == 1:
         addBook(catalog)
     if editType == 2:
@@ -67,6 +67,7 @@ def writeToFile(title, author, pubDate, catalog, firstLine):
         # Write <> if not first in file
         if firstLine != '':
             openCatalog.write("\n<>\n")
+        # Remove empty tuple if no items in file when catalog created
         else:
             catalog.pop(0)
         openCatalog.write(title + "\n")
@@ -76,6 +77,5 @@ def writeToFile(title, author, pubDate, catalog, firstLine):
         openCatalog.close()
         # Append info to catalog list
         catalog.append((title, author, pubDate))
-        print(catalog)
         # Ask user if they wish to continue
         print("Book added to catalog.")
