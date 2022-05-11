@@ -1,6 +1,6 @@
 def searchCatalog(catalog):
     # Searches catalog and retuns items found or message if not found
-    
+    catalog = catalog
     info = "" # initializes variable to contain book information
     foundIt = False
 
@@ -11,18 +11,29 @@ def searchCatalog(catalog):
     searchType = input("Enter 4 to exit the search menu: ")
     # Search based on user choice
     if searchType == '1':
+        # Search by title
         info, foundIt = titleSearch(catalog) # search results & flag
+        return info, foundIt, searchType
     elif searchType == '2':
+        # Search by author
         info, foundIt = authorSearch(catalog) # search results & flag
+        return info, foundIt, searchType
     elif searchType == '3':
-        info, foundIt = pubDateSearch(catalog)# search results & flag
+        # Search by range of publication dates
+        info, foundIt = pubDateSearch(catalog) # search results & flag
+        return info, foundIt, searchType
     elif searchType == '4':
-        nextSearch = False
-        return info, foundIt, nextSearch
+        # Returns that input is not one of the options;
+        # main function runs search again
+        info = "Searches complete.\n"
+        return info, foundIt, searchType
     else:
         print("\nERROR... enter a whole number between 1 and 4")
-    nextSearch = True
-    return info, foundIt, nextSearch
+        #info = "error"
+        info, foundIt, searchType = searchCatalog(catalog)
+        return info, foundIt, searchType
+        
+    
 
 def titleSearch(catalog):
     # Creates and returns list of tuples containing book
