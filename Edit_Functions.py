@@ -18,6 +18,9 @@ def addBook(catalog):
         title = input("\nEnter the title of the book: ")
         author = input("Enter the author of the book: ")
         pubDate = input("Enter the book's year of publication: ")
+        while not pubDate.isnumeric() or len(pubDate) != 4:
+            print("ERROR... please enter the 4-digit representation of the year: ")
+            pubDate = input("Enter the book's year of publication: ")
         info = [(title, author, pubDate)]
         # Check if information is correct
         formatInfo(info)
@@ -34,7 +37,7 @@ def addBook(catalog):
             choice = input("Type 'Y' for yes or 'N' for no.")
             if choice.upper() == 'N':
                 # User done; exits loop and therefore function
-                print("Additions complete.")
+                print("Additions complete.\n")
                 break
         else:
             # Does not add info to catalog; asks if user wishes to re-enter info
@@ -53,36 +56,45 @@ def deleteBook(catalog):
     # Search for item matching input
     searchType = '1'
     infoList, foundIt, searchType = searchCatalog(catalog)
-    #while infoList == "error":
-        #info, foundIt, searchType = searchCatalog(catalog)
-    print(searchType)
     if searchType != '4':
         formatInfo(infoList)
         # Confirm information is correct
         infoCorrect = input("\nIs this the book you wish to remove (Y for yes, N for no)?")
         if infoCorrect.upper() == 'Y':
             # Information correct; open temporary file
-            tempCat = open('temp_cat.txt', 'w')
+        #    tempCat = open('temp_cat.txt', 'w')
             info = infoList[0] # Selects tuple from list
-            # Read first line of file
-            line = (openCatalog.readline()).rstrip()
-            while line != '':
-                # Loop write other books to new file
-                if info[0] == line:
-                    line = (openCatalog.readline()).rstrip()
-                    line = (openCatalog.readline()).rstrip()
-                    line = (openCatalog.readline()).rstrip()
-                    line = (openCatalog.readline()).rstrip()
-                tempCat.write(line)
-                line = (openCatalog.readline()).rstrip()
-                if line != '':
-                    tempCat.write('\n')
+            lines = openCatalog.readlines()
+            outerCount = 0
+            newCatalog = []
+            for outerCount in range((len(lines) // 4) + 1):
+                innerCount = 0 + (outerCount * 4)
+                title = lines[innerCount]
+                innerCount += 1
+                author = lines[innerCount]
+                innerCount += 1
+                pubDate = lines[innerCount]
+                innerCount += 1
+                if innerCount != (len(lines)):
+                    newLine = lines[innerCount]
+                    innerCount += 1
+                else:
+                    newLine = ''
+                fileInfo = (title, author, pubDate, newLine)
+                newCatalog.append(fileInfo)
+                print(newCatalog)
+                outerCount += 1
+            count = 0
+            for count in range(len(newCatalog)):
+                book = newCatalog[count]
+                print((book[0]).rstrip() == info[0] and (book[1]).rstrip() == info[1])
+                
             # Close files
             openCatalog.close()
-            tempCat.close()
+        #    tempCat.close()
             # Remove old file; rename new file
-            os.remove('catalog.txt')
-            os.rename('temp_cat.txt', 'catalog.txt')
+       #     os.remove('catalog.txt')
+        #    os.rename('temp_cat.txt', 'catalog.txt')
             # Remove from catalog list
             count = 0
             for item in catalog:
