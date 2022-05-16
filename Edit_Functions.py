@@ -95,8 +95,7 @@ def deleteBook(catalog):
             newCount = 0
             for count in range(len(newCatalog)):
                 
-                book = newCatalog[count]
-                print(book)
+                book = newCatalog[count] # tuple of book information read from file
 
                 # Item removed is not last in list
                 if lastMatch == False:
@@ -111,12 +110,11 @@ def deleteBook(catalog):
                     if count != len(newCatalog) - 1:
                         tempCat.write(book[0])
                         tempCat.write(book[1])
-                        tempCat.write(book[2])
-                    if count != len(newCatalog) - 2:
-                        tempCat.write(book[3])
-                        print('normal')
+                        if count != len(newCatalog) - 2:
+                            tempCat.write(book[2])
+                            tempCat.write(book[3])
                     else:
-                        print('hi!')
+                        tempCat.write((book[2]).rstrip())
                     newCount += 1
                     
             # Close files
@@ -135,6 +133,7 @@ def deleteBook(catalog):
             print("Book removed from catalog")
         else:
             # Close files
+            print('no entered')
             openCatalog.close()
 
 def formatInfo(book):
