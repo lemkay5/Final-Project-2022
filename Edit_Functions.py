@@ -49,6 +49,7 @@ def addBook(catalog):
                 break
 
 def deleteBook(catalog):
+    # Deltes book information that user selects from catalog file & list
     # Open file
     openCatalog = open('catalog.txt', 'r')
     # Ask user for input
@@ -62,13 +63,13 @@ def deleteBook(catalog):
         infoCorrect = input("\nIs this the book you wish to remove (Y for yes, N for no)?")
         if infoCorrect.upper() == 'Y':
             # Information correct; open temporary file
-        #    tempCat = open('temp_cat.txt', 'w')
+            tempCat = open('temp_cat.txt', 'w')
             info = infoList[0] # Selects tuple from list
             lines = openCatalog.readlines()
-            outerCount = 0
+            outerCount = 0 # Loop control variable
             newCatalog = []
             for outerCount in range((len(lines) // 4) + 1):
-                innerCount = 0 + (outerCount * 4)
+                innerCount = 0 + (outerCount * 4) # Increments for each book
                 title = lines[innerCount]
                 innerCount += 1
                 author = lines[innerCount]
@@ -82,19 +83,48 @@ def deleteBook(catalog):
                     newLine = ''
                 fileInfo = (title, author, pubDate, newLine)
                 newCatalog.append(fileInfo)
-                print(newCatalog)
                 outerCount += 1
+
+            # Finds last info in list
+            lastMatch = False
+            lastItem = newCatalog[len(newCatalog) - 1]
+            if info[0] == (lastItem[0]).rstrip():
+                lastMatch = True
+            # Loop to write othe books to file
             count = 0
+            newCount = 0
             for count in range(len(newCatalog)):
-                book = newCatalog[count]
-                print((book[0]).rstrip() == info[0] and (book[1]).rstrip() == info[1])
                 
+                book = newCatalog[count]
+                print(book)
+
+                # Item removed is not last in list
+                if lastMatch == False:
+                    if (book[0]).rstrip() != info[0]:
+                        tempCat.write(book[0])
+                        tempCat.write(book[1])
+                        tempCat.write(book[2])
+                        if book[3] != '':
+                            tempCat.write(book[3])
+                # Item removed is last in list
+                else:
+                    if count != len(newCatalog) - 1:
+                        tempCat.write(book[0])
+                        tempCat.write(book[1])
+                        tempCat.write(book[2])
+                    if count != len(newCatalog) - 2:
+                        tempCat.write(book[3])
+                        print('normal')
+                    else:
+                        print('hi!')
+                    newCount += 1
+                    
             # Close files
             openCatalog.close()
-        #    tempCat.close()
+            tempCat.close()
             # Remove old file; rename new file
-       #     os.remove('catalog.txt')
-        #    os.rename('temp_cat.txt', 'catalog.txt')
+            os.remove('catalog.txt')
+            os.rename('temp_cat.txt', 'catalog.txt')
             # Remove from catalog list
             count = 0
             for item in catalog:
@@ -106,7 +136,6 @@ def deleteBook(catalog):
         else:
             # Close files
             openCatalog.close()
-            tempCat.close()
 
 def formatInfo(book):
     # Formats and prints book information
