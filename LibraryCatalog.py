@@ -2,8 +2,6 @@
 # Author: Mary Krane
 # Date: 03/18/2022
 # Summary: Find and alter items in a list of books
-# Variables:
-#
 
 # import functions
 from Search_Functions import searchCatalog 
@@ -21,9 +19,8 @@ def main():
             while searchType != '4':
                 # User has made a search
                 info, foundIt, searchType = searchCatalog(catalogList)
-                #while info == "error":
-                    #info, foundIt, searchType = searchCatalog(catalogList)
-                    # search results, flag, and whether to search again
+                # search results, flag, and whether to search again
+
                 if foundIt == True:
                     # Match found, prints matches
                     print("\nResults:")

@@ -29,7 +29,6 @@ def searchCatalog(catalog):
         return info, foundIt, searchType
     else:
         print("\nERROR... enter a whole number between 1 and 4")
-        #info = "error"
         info, foundIt, searchType = searchCatalog(catalog)
         return info, foundIt, searchType
         

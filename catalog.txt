@@ -1,3 +1,19 @@
+Treasure Island
+Robert Louis Stevenson
+1883
+<>
+The League of Frightened Men
+Rex Stout
+1935
+<>
+The Green and the Gray
+Timothy Zahn
+2003
+<>
+Judgment at Proteus
+Timothy Zahn
+2012
+<>
 The Hobbit
 J.R.R. Tolkien
 1937
@@ -6,14 +22,6 @@ N or M?
 Agatha Christie
 1941
 <>
-The Winged Watchman
-Hilda Van Stockum
-1962
-<>
-The Book of Three 
+The Book of Three
 Lloyd Alexander
 1964
-<>
-Howl’s Moving Castle
-Diana Wynne Jones 
-1986

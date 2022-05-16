@@ -3,11 +3,19 @@ import os
 
 def editCatalog(catalog):
     # Adds or removes items from catalog based on user choice
-    editType = int(input("\nEnter 1 to add to the catalog or 2 to delete from the catalog: "))
-    if editType == 1:
+    print("\nEnter 1 to add to the catalog,")
+    print("Enter 2 to delete from the catalog, ")
+    editType = input("Enter 3 to exit to edit menu: ")
+    if editType == '1':
         addBook(catalog)
-    if editType == 2:
+    elif editType == '2':
         deleteBook(catalog)
+    elif editType == '3':
+        print()
+        return
+    else:
+        print("ERROR... input must be \"1\" or \"2\"")
+        editCatalog(catalog)
 
 def addBook(catalog):
     # Adds book information from user to catalog file & list
@@ -65,55 +73,66 @@ def deleteBook(catalog):
             # Information correct; open temporary file
             tempCat = open('temp_cat.txt', 'w')
             info = infoList[0] # Selects tuple from list
-            lines = openCatalog.readlines()
+            lines = openCatalog.readlines() # Creates list of every line in file
             outerCount = 0 # Loop control variable
             newCatalog = []
             for outerCount in range((len(lines) // 4) + 1):
-                innerCount = 0 + (outerCount * 4) # Increments for each book
-                title = lines[innerCount]
+            # Creates new catalog with tuples of information, used to write 
+                innerCount = 0 + (outerCount * 4)
+                # used to select items from list to create tuple
+                title = lines[innerCount] # title of book
                 innerCount += 1
-                author = lines[innerCount]
+                author = lines[innerCount] # author of book
                 innerCount += 1
-                pubDate = lines[innerCount]
+                pubDate = lines[innerCount] # publication year of book
                 innerCount += 1
                 if innerCount != (len(lines)):
-                    newLine = lines[innerCount]
+                # Adds <> as part of book information, unless eof reached
+                    newLine = lines[innerCount] # Line in between books
                     innerCount += 1
                 else:
+                # At eof, gives last item empty string instead of <>
                     newLine = ''
                 fileInfo = (title, author, pubDate, newLine)
-                newCatalog.append(fileInfo)
+                    # Tuple of book information, read from file
+                newCatalog.append(fileInfo) # Add tuple to catalog used to write to new file
                 outerCount += 1
-
-            # Finds last info in list
-            lastMatch = False
-            lastItem = newCatalog[len(newCatalog) - 1]
+            
+            lastMatch = False # Indicates if item to be removed is last in file
+            lastItem = newCatalog[len(newCatalog) - 1] # Finds last info in list
             if info[0] == (lastItem[0]).rstrip():
+            # Item to be removed is last in file
                 lastMatch = True
-            # Loop to write othe books to file
+
+            # Loop to write other books to file
             count = 0
             newCount = 0
             for count in range(len(newCatalog)):
                 
                 book = newCatalog[count] # tuple of book information read from file
 
-                # Item removed is not last in list
                 if lastMatch == False:
+                # Item removed is not last in list
                     if (book[0]).rstrip() != info[0]:
+                    # Writes book to new file unless it is the one to be deleted
                         tempCat.write(book[0])
                         tempCat.write(book[1])
                         tempCat.write(book[2])
                         if book[3] != '':
+                        # Writes <> if not eof
                             tempCat.write(book[3])
-                # Item removed is last in list
                 else:
+                # Item removed is last in list
                     if count != len(newCatalog) - 1:
+                    # Writes everything but last book to new file
                         tempCat.write(book[0])
                         tempCat.write(book[1])
                         if count != len(newCatalog) - 2:
+                        # Writes all data b/c not penultimate book in file
                             tempCat.write(book[2])
                             tempCat.write(book[3])
                     else:
+                    # Only writes date of book; no newline character or <>
                         tempCat.write((book[2]).rstrip())
                     newCount += 1
                     
@@ -134,7 +153,7 @@ def deleteBook(catalog):
         else:
             # Close files
             openCatalog.close()
-            fixInfo = input("Do you wish to fix the information (Y for yes, N for no)?")
+            fixInfo = input("Do you wish select another book (Y for yes, N for no)?")
             if fixInfo.upper() == 'Y':
                 deleteBook(catalog)
             else:
