@@ -133,8 +133,13 @@ def deleteBook(catalog):
             print("Book removed from catalog")
         else:
             # Close files
-            print('no entered')
             openCatalog.close()
+            fixInfo = input("Do you wish to fix the information (Y for yes, N for no)?")
+            if fixInfo.upper() == 'Y':
+                deleteBook(catalog)
+            else:
+                return
+            
 
 def formatInfo(book):
     # Formats and prints book information
